@@ -1,0 +1,10 @@
+baseURL = 'https://introalgorithmsfall26.cs.jhu.edu/'
+languageCode = 'en-us'
+title = 'JHU 601.433/633 Introduction to Algorithms, Fall 2026'
+
+[params]
+	year = '2026'
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
