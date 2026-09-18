@@ -1,0 +1,145 @@
+\documentclass[11pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{xspace}
+\usepackage{theorem}
+\usepackage{hyperref}
+\usepackage{fullpage}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{alltt}
+
+\usepackage{array}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{N}{@{}m{0pt}@{}}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\usepackage{enumitem}                     
+
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usetikzlibrary{shapes}
+
+\tikzstyle{code} = [black!90, draw=black!30, fill=black!5, very thick,
+    rectangle, dashed, inner xsep=10pt, inner ysep=7pt]
+
+\newenvironment{codebox}{
+    \hspace{.05\textwidth}
+        \begin{tikzpicture}
+            \node[code] \bgroup
+                \begin{minipage}{.65\textwidth}
+                    \begin{alltt}}
+                    {\end{alltt}
+                \end{minipage}
+            \egroup;
+        \end{tikzpicture}
+}
+
+ 
+ 
+ \usepackage{titlesec}
+
+\titleformat*{\section}{\bfseries}
+\titleformat*{\subsection}{\bfseries}
+\titleformat*{\subsubsection}{\bfseries}
+\titleformat*{\paragraph}{\bfseries}
+\titleformat*{\subparagraph}{\bfseries}
+
+
+\newenvironment{proof}{{\bf Proof:  }}{\hfill\rule{2mm}{2mm}}
+\newenvironment{proofof}[1]{{\bf Proof of #1:  }}{\hfill\rule{2mm}{2mm}}
+\newenvironment{proofofnobox}[1]{{\bf#1:  }}{}
+\newenvironment{example}{{\bf Example:  }}{\hfill\rule{2mm}{2mm}}
+
+\newtheorem{fact}{Fact}
+\newtheorem{lemma}[fact]{Lemma}
+\newtheorem{theorem}[fact]{Theorem}
+\newtheorem{definition}[fact]{Definition}
+\newtheorem{corollary}[fact]{Corollary}
+\newtheorem{proposition}[fact]{Proposition}
+\newtheorem{claim}[fact]{Claim}
+\newtheorem{exercise}[fact]{Exercise}
+
+% math notation
+\newcommand{\R}{\ensuremath{\mathbb R}}
+\newcommand{\Z}{\ensuremath{\mathbb Z}}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\F}{\ensuremath{\mathcal F}}
+\newcommand{\SymGrp}{\ensuremath{\mathfrak S}}
+
+\newcommand{\size}[1]{\ensuremath{\left|#1\right|}}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\polylog}{\operatorname{polylog}}
+
+% anupam's abbreviations
+\newcommand{\e}{\epsilon}
+\newcommand{\half}{\ensuremath{\frac{1}{2}}}
+\newcommand{\junk}[1]{}
+\newcommand{\sse}{\subseteq}
+\newcommand{\union}{\cup}
+\newcommand{\meet}{\wedge}
+
+\newcommand{\prob}[1]{\ensuremath{\text{{\bf Pr}$\left[#1\right]$}}}
+\newcommand{\expct}[1]{\ensuremath{\text{{\bf E}$\left[#1\right]$}}}
+\newcommand{\Event}{{\mathcal E}}
+\newcommand{\E}{\ensuremath{\text{E}}}
+
+\newcommand{\mnote}[1]{\normalmarginpar \marginpar{\tiny #1}}
+
+\setenumerate[0]{label=(\alph*)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document begins here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+
+\noindent {\large {\bf 601.433/633 Introduction to Algorithms} \hfill {{\bf Fall 2026}}}\\
+{{\bf Homework \#2}} \hfill {{\bf Due:} September 24, 2026} \\
+\rule[0.1in]{\textwidth}{0.4pt}
+
+Remember: this is an oral presentation homework!  You are required to work in groups of three, and may collaborate only with other students in your group.  We encourage you to write up solutions, but your grade will be based entirely on your presentation.  At your presentation, the grader will randomly assign each student to present a problem. 
+
+You may use the internet or LLMs to look up formulas, definitions, concepts, etc., but may not simply look up the answers online or ask an LLM.  
+
+
+\noindent \rule[0.1in]{\textwidth}{0.4pt}
+
+\section{Dumbbell Matching (33 points)}
+You belong to a gym which has two sets of dumbbells $A$ and $B$, each of which has $n$ dumbbells.  You know that there is a correspondence between the sets: for every dumbbell in set $A$ there is exactly one dumbbell in set $B$ that has the same weight, and similarly for every dumbbell in set $B$ there is exactly one dumbbell in set $A$ that has the same weight.  You want to perform exercises that require two dumbbells of the same weight.  So you want to pair up the dumbbells by weight, i.e., for every dumbbell you want to know which dumbbell from the other set has the exact same weight.
+
+Unfortunately the dumbbells are unsorted and unlabeled, and you can't tell their weights by looking at them. The only way to compare two dumbbells is to pick them both up simultaneously (one in each hand) and perform a curl.  By comparing the strain on your arms, you can tell whether the two dumbbells are the same weight, and if not, which one is heavier.  Even more unfortunately, the owner of the gym has a rule that two dumbbells from the same set cannot be used at the same time.  So you can compare a dumbbell from set $A$ to a dumbbell from set $B$, but cannot compare two dumbbells from the same set.  
+
+Prove that any deterministic algorithm which solves the problem must make at least $\Omega(n \log n)$ comparisons.
+
+
+
+\section{Group Sorting (33 points)}
+In the last homework you designed an algorithm for $k$-group-sorting in time $O(n \log k)$.  Prove a matching lower bound in the comparison model.  That is, prove that any algorithm for $k$-group-sorting in the comparisom model must make at least $\Omega(n \log k)$ comparisons in the worst case.
+
+
+
+
+\section{Sorting Different-Length Items (34 points)}
+We saw in class some fast sorting algorithms where we assumed that the elements were integers with the same number of digits.  In this problem we change those assumptions slightly.
+
+Suppose now that we are given an array of strings (over some finite alphabet, say the letters {\tt a-z}).  Each string can have a different number of characters, but the total number of characters in all the strings (i.e., the sum over the strings of the length of the string) is equal to $n$.  Show to sort the strings lexicographically in $O(n)$ time.  Here lexicographic order is the standard alphabetic order, so for example {\tt a} $<$ {\tt ab} $<$ {\tt b}.
+
+
+\end{document}
+
+
+
+
+
