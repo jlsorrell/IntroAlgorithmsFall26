@@ -1,0 +1,264 @@
+\documentclass[11pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{xspace}
+\usepackage{theorem}
+\usepackage{hyperref}
+\usepackage{fullpage}
+%\usepackage[]{algorithm2e}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{listings}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\usepackage{enumitem}                     
+
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usetikzlibrary{shapes}
+
+\tikzstyle{code} = [black!90, draw=black!30, fill=black!5, very thick,
+    rectangle, dashed, inner xsep=10pt, inner ysep=7pt]
+
+\newenvironment{codebox}{
+    \hspace{.05\textwidth}
+        \begin{tikzpicture}
+            \node[code] \bgroup
+                \begin{minipage}{.65\textwidth}
+                    \begin{alltt}}
+                    {\end{alltt}
+                \end{minipage}
+            \egroup;
+        \end{tikzpicture}
+}
+
+\newif\ifrubric
+\rubrictrue
+\rubricfalse
+
+% This is the stuff for normal spacing
+%\makeatletter
+% \setlength{\textwidth}{6.5in}
+% \setlength{\oddsidemargin}{0in}
+% \setlength{\evensidemargin}{0in}
+% \setlength{\topmargin}{0.25in}
+% \setlength{\textheight}{8.25in}
+% \setlength{\headheight}{0pt}
+% \setlength{\headsep}{0pt}
+% \setlength{\marginparwidth}{59pt}
+%
+% \setlength{\parindent}{0pt}
+% \setlength{\parskip}{5pt plus 1pt}
+% \setlength{\theorempreskipamount}{5pt plus 1pt}
+% \setlength{\theorempostskipamount}{0pt}
+% \setlength{\abovedisplayskip}{8pt plus 3pt minus 6pt}
+ 
+ 
+ \usepackage{titlesec}
+
+\titleformat*{\section}{\bfseries}
+\titleformat*{\subsection}{\bfseries}
+\titleformat*{\subsubsection}{\bfseries}
+\titleformat*{\paragraph}{\bfseries}
+\titleformat*{\subparagraph}{\bfseries}
+
+% \renewcommand{\section}{\@startsection{section}{1}{0mm}%
+%                                   {2ex plus -1ex minus -.2ex}%
+%                                   {1.3ex plus .2ex}%
+%                                   {\normalfont\Large\bfseries}}%
+% \renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+%                                     {1ex plus -1ex minus -.2ex}%
+%                                     {1ex plus .2ex}%
+%                                     {\normalfont\large\bfseries}}%
+% \renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+%                                     {1ex plus -1ex minus -.2ex}%
+%                                     {1ex plus .2ex}%
+%                                     {\normalfont\normalsize\bfseries}}
+% \renewcommand\paragraph{\@startsection{paragraph}{4}{0mm}%
+%                                    {1ex \@plus1ex \@minus.2ex}%
+%                                    {-1em}%
+%                                    {\normalfont\normalsize\bfseries}}
+% \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+%                                       {2.0ex \@plus1ex \@minus .2ex}%
+%                                       {-1em}%
+%                                      {\normalfont\normalsize\bfseries}}
+%\makeatother
+
+\newenvironment{proof}{{\bf Proof:  }}{\hfill\rule{2mm}{2mm}}
+\newenvironment{proofof}[1]{{\bf Proof of #1:  }}{\hfill\rule{2mm}{2mm}}
+\newenvironment{proofofnobox}[1]{{\bf#1:  }}{}
+\newenvironment{example}{{\bf Example:  }}{\hfill\rule{2mm}{2mm}}
+%\renewcommand{\thesection}{\lecnum.\arabic{section}}
+
+%\renewcommand{\theequation}{\thesection.\arabic{equation}}
+%\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+
+%\renewcommand{\theequation}{\lecnum.\arabic{equation}}
+%\renewcommand{\thefigure}{\lecnum.\arabic{figure}}
+
+%\newcounter{LecNum}
+%\setcounter{LecNum}{1}
+
+%\newtheorem{fact}{Fact}[LecNum]
+\newtheorem{fact}{Fact}
+\newtheorem{lemma}[fact]{Lemma}
+\newtheorem{theorem}[fact]{Theorem}
+\newtheorem{definition}[fact]{Definition}
+\newtheorem{corollary}[fact]{Corollary}
+\newtheorem{proposition}[fact]{Proposition}
+\newtheorem{claim}[fact]{Claim}
+\newtheorem{exercise}[fact]{Exercise}
+
+% math notation
+\newcommand{\R}{\ensuremath{\mathbb R}}
+\newcommand{\Z}{\ensuremath{\mathbb Z}}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\F}{\ensuremath{\mathcal F}}
+\newcommand{\SymGrp}{\ensuremath{\mathfrak S}}
+
+\newcommand{\size}[1]{\ensuremath{\left|#1\right|}}
+%\newcommand{\ceil}[1]{\ensuremath{\left\lceil#1\right\rceil}}
+%\newcommand{\floor}[1]{\ensuremath{\left\lfloor#1\right\rfloor}}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\polylog}{\operatorname{polylog}}
+
+% anupam's abbreviations
+\newcommand{\e}{\epsilon}
+\newcommand{\half}{\ensuremath{\frac{1}{2}}}
+\newcommand{\junk}[1]{}
+\newcommand{\sse}{\subseteq}
+\newcommand{\union}{\cup}
+\newcommand{\meet}{\wedge}
+
+\newcommand{\prob}[1]{\ensuremath{\text{{\bf Pr}$\left[#1\right]$}}}
+\newcommand{\expct}[1]{\ensuremath{\text{{\bf E}$\left[#1\right]$}}}
+\newcommand{\Event}{{\mathcal E}}
+\newcommand{\E}{\ensuremath{\text{E}}}
+
+\newcommand{\mnote}[1]{\normalmarginpar \marginpar{\tiny #1}}
+
+\setenumerate[0]{label=(\alph*)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document begins here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+
+\noindent {\large {\bf 601.433/633 Introduction to Algorithms} \hfill {{\bf Fall 2026}}}\\
+{{\bf Homework \#3}} \hfill {{\bf Due:} October 1, 2026, 11:59pm} \\
+\rule[0.1in]{\textwidth}{0.4pt}
+
+Remember: you may work in groups, but must write up your solution entirely on your own.  Solutions must by typeset (\LaTeX\ preferred but not required).  Collaboration is limited to discussing the problems -- you may not look at, compare, reuse, etc.~any text from anyone else in the class.  You may use the internet to look up formulas, definitions, etc., but may not simply look up the answers online.  
+
+Please include proofs with all of your answers, unless stated otherwise.
+
+\noindent \rule[0.1in]{\textwidth}{0.4pt}
+
+\section{Amortized analysis of 2-3-4 trees (33 points)}
+
+Recall that in a 2-3-4 tree, whenever we insert a new key we immediately split (on our way down the tree) any node we see that is full (has 3 keys in it).  
+
+\begin{enumerate}
+\item (11 points) Show that in the worst case, the number of splits that we do in a single operation can be $\Omega(\log n)$.  In other words, show that there is a series of $n$ inserts so that the next insert causes $\Omega(\log n)$ splits.  You can be informal here --- just explain at a high level what such a sequence would look like and why it would result in $\Omega(\log n)$ splits.
+
+\end{enumerate}
+
+Let's try to get around this worst-case bound by using amortized analysis.  We will try to prove that the amortized number of splits is only $O(1)$.  Note that this does not mean that the amortized running time of an insert is $O(1)$ (since this is not true); it just means that the amortized number of splits is $O(1)$.  So think of ``cost'' not as ``time'', but as ``number of splits''.  Since we didn't talk about them in class, feel free to assume there are no delete operations.  
+
+\begin{enumerate}[resume]
+\item (11 points) Since we only have to split a node when it's full, a natural approach is to have a  bank on every node which works as follows.  When a node is first created its bank is initialized to $0$.  When a node becomes full, we add $1$ to its bank.  Then when we split a node we use the $1$ in its bank to pay for the split.  In other words, a node's bank is $1$ if the node is full and $0$ otherwise.
+
+This argument unfortunately does not work.  Explain why this banking scheme \emph{does not} imply that the amortized number of splits is $O(1)$.  Your explanation should be convincing, but does not need to be a fully formal proof
+
+\item (11 points) Show how to modify this argument to work: use a bank at each node to prove that the amortized number of splits is $O(1)$.  Hint: the previous part shows that this bank cannot just equal $1$ if the node is full and $0$ otherwise.
+
+
+\end{enumerate}
+
+\section{Move to Front (34 points)}
+Amortized analysis can be used not just to give absolute bounds on running times, but also bounds \emph{compared to other algorithms}.  In this problem we'll see an example of this.
+
+Suppose we have $n$ items $x_1, x_2, \dots, x_n$ that we wish to store in a linked list.  The cost of a \emph{lookup} operation is the position in the list, i.e.~if we lookup some element $x_i$ we pay $1$ if it is the first element, $2$ if it is the second element, $3$ if it is the third element, etc.  This models the time it takes to scan through the list to find the element.  
+
+For example, suppose there are four items and we lookup $x_1$ twice, $x_2$ three times, $x_3$ once, and $x_4$ four times.  Then if we store them in the list $(x_1, x_2, x_3, x_4)$ the total cost is $1(2) + 2(3) + 3(1) + 4(4) = 27$.  On the other hand, if we stored them in the list $(x_4, x_2, x_1, x_3)$ the cost would be $1(4) + 2(3) + 3(2) + 4(1) = 20$.  It is easy to see that if we knew the number of times each element was looked up, the optimal list is simply sorting by the number of lookups, i.e.~the first element is the one looked up most often, then the element looked up next most often, etc.  
+
+But what if we do not know how many times each element will be looked up?  It turns out that a good strategy is \emph{Move-to-Front} (MTF): when we lookup an item, we also move it to the head of the list.  Let's say that moving an element is free (it is easy enough to implement with a constant number of pointer switches, in any case).  So if, for example, we start with the list $(x_1, x_2, \dots, x_n)$ and then lookup $x_4$, we pay a cost of $4$ and afterwards the list will be $(x_4, x_1, x_2, x_3, x_5, x_6, \dots, x_n)$.  Then if we lookup $x_4$ again we only have to pay a cost of $1$.  
+
+\begin{enumerate}
+
+\item (17 points) Consider a sequence of $m$ operations (think of $m$ as being much larger than $n$).  Let $C_{init}$ be the total cost of these operations if we used the original list $(x_1, x_2, \dots, x_n)$ the entire time (i.e., we do not use MTF).  Let $C_{MTF}$ be the total cost if we use MTF on the same operations starting from the original list.  Prove that $C_{MTF} \leq 2 C_{init}$.  
+
+Hint: Think of each item $x_i$ as having a ``piggy bank'' in which the number of tokens is the number of elements before it in the current list that come after it in the initial list, or a potential function equal to the number of reversals.  
+
+
+\item (17 points) Now let $C_{static}$ be the smallest possible cost among all fixed lists.  In other words, given the same sequence of lookups, each fixed list (without MTF) has some cost, and let $C_{static}$ be the minimum of those costs.  Note that this will correspond to the list that is sorted by the number of accesses, like in the first example.  Prove that $C_{MTF} \leq 2C_{static} + n^2$.
+
+Hint: Think about your bank or potential function argument from the previous part.  What if you redefine it to be relative to the optimal list, rather than the initial list?  Then what is the initial bank/potential value?  How does this affect the amortized analysis?
+
+\end{enumerate}
+
+
+
+\section{$k$-th smallest elements (33 points)}
+Given an array $a_1,a_2,\mathellipsis,a_n$ and an integer $k\in[n]$. For each $i\in[n+1-k]$, let $b_i$ be the $k$-th smallest element in $a_1,\mathellipsis,a_{k+i-1}$.
+
+\begin{enumerate}
+\item (17 points) Design an algorithm which outputs the array $b_1,\mathellipsis,b_{n+1-k}$. The running time should be $O(n\log k)$.
+
+\item (16 points) Prove the correctness and the running time for your algorithm.
+
+\end{enumerate}
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
