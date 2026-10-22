@@ -15,6 +15,8 @@ Please use [Gradescope](https://www.gradescope.com) to submit your homeworks and
 - Homework 3: [PDF](Homeworks/hw3.pdf), [LaTeX](Homeworks/hw3.tex).  [Solutions](https://jhu.instructure.com/courses/132259/files?preview=19452092).
 - Homework 4: [PDF](Homeworks/hw4.pdf), [LaTeX](Homeworks/hw4.tex).
 - Homework 5: [PDF](Homeworks/hw5.pdf), [LaTeX](Homeworks/hw5.tex).
+- Homework 6: [PDF](Homeworks/hw6.pdf), [LaTeX](Homeworks/hw6.tex).
+
 
 Practice Exams:
 - [Practice midterm 1](PracticeExams/midterm1.pdf).  [Solutions](PracticeExams/midterm1_solutions.pdf).

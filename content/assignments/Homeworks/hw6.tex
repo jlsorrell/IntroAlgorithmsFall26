@@ -1,0 +1,219 @@
+\documentclass[11pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{xspace}
+\usepackage{theorem}
+\usepackage{hyperref}
+\usepackage{fullpage}
+%\usepackage[]{algorithm2e}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{listings}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\usepackage{enumitem}                     
+
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usetikzlibrary{shapes}
+
+\tikzstyle{code} = [black!90, draw=black!30, fill=black!5, very thick,
+    rectangle, dashed, inner xsep=10pt, inner ysep=7pt]
+
+\newenvironment{codebox}{
+    \hspace{.05\textwidth}
+        \begin{tikzpicture}
+            \node[code] \bgroup
+                \begin{minipage}{.65\textwidth}
+                    \begin{alltt}}
+                    {\end{alltt}
+                \end{minipage}
+            \egroup;
+        \end{tikzpicture}
+}
+
+\newif\ifrubric
+\rubrictrue
+ 
+ 
+ 
+ \usepackage{titlesec}
+
+\titleformat*{\section}{\bfseries}
+\titleformat*{\subsection}{\bfseries}
+\titleformat*{\subsubsection}{\bfseries}
+\titleformat*{\paragraph}{\bfseries}
+\titleformat*{\subparagraph}{\bfseries}
+
+
+\newenvironment{proof}{{\bf Proof:  }}{\hfill\rule{2mm}{2mm}}
+\newenvironment{proofof}[1]{{\bf Proof of #1:  }}{\hfill\rule{2mm}{2mm}}
+\newenvironment{proofofnobox}[1]{{\bf#1:  }}{}
+\newenvironment{example}{{\bf Example:  }}{\hfill\rule{2mm}{2mm}}
+
+\newtheorem{fact}{Fact}
+\newtheorem{lemma}[fact]{Lemma}
+\newtheorem{theorem}[fact]{Theorem}
+\newtheorem{definition}[fact]{Definition}
+\newtheorem{corollary}[fact]{Corollary}
+\newtheorem{proposition}[fact]{Proposition}
+\newtheorem{claim}[fact]{Claim}
+\newtheorem{exercise}[fact]{Exercise}
+
+% math notation
+\newcommand{\R}{\ensuremath{\mathbb R}}
+\newcommand{\Z}{\ensuremath{\mathbb Z}}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\F}{\ensuremath{\mathcal F}}
+\newcommand{\SymGrp}{\ensuremath{\mathfrak S}}
+
+\newcommand{\size}[1]{\ensuremath{\left|#1\right|}}
+%\newcommand{\ceil}[1]{\ensuremath{\left\lceil#1\right\rceil}}
+%\newcommand{\floor}[1]{\ensuremath{\left\lfloor#1\right\rfloor}}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\polylog}{\operatorname{polylog}}
+
+% anupam's abbreviations
+\newcommand{\e}{\epsilon}
+\newcommand{\half}{\ensuremath{\frac{1}{2}}}
+\newcommand{\junk}[1]{}
+\newcommand{\sse}{\subseteq}
+\newcommand{\union}{\cup}
+\newcommand{\meet}{\wedge}
+
+\newcommand{\prob}[1]{\ensuremath{\text{{\bf Pr}$\left[#1\right]$}}}
+\newcommand{\expct}[1]{\ensuremath{\text{{\bf E}$\left[#1\right]$}}}
+\newcommand{\Event}{{\mathcal E}}
+\newcommand{\E}{\ensuremath{\text{E}}}
+
+\newcommand{\mnote}[1]{\normalmarginpar \marginpar{\tiny #1}}
+\newcommand{\opt}[0]{{\text{OPT}}}
+
+\setenumerate[0]{label=(\alph*)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document begins here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+
+\noindent {\large {\bf 601.433/633 Introduction to Algorithms} \hfill {{\bf Fall 2026}}}\\ 
+{{\bf Homework \#6}} \hfill {{\bf Due:} October 29, 2026, 11:59pm} \\
+\rule[0.1in]{\textwidth}{0.4pt}
+
+Remember: you may work in groups, but must write up your solution entirely on your own.  Solutions must by typeset (\LaTeX\ preferred but not required).  Collaboration is limited to discussing the problems -- you may not look at, compare, reuse, etc.~any text from anyone else in the class.  You may use the internet to look up formulas, definitions, etc., but may not simply look up the answers online.  
+
+Please include proofs with all of your answers, unless stated otherwise.
+
+\noindent \rule[0.1in]{\textwidth}{0.4pt}
+
+\section{Computer Viruses (50 points)}
+    You're helping some security analysts monitor a computer network, tracking the spread of an online virus.
+    There are $n$ computers in the system, labeled $C_1, C_2, \dots, C_n$.  You are given a collection of
+    \emph{trace data} indicating the times at which pairs of computers communicated.  This data is a 
+    sequence of ordered triples $(C_i, C_j, t_k)$, where such a triple indicates that $C_i$ and $C_j$
+    exchanged bits at time $t_k$.  There are $m$ triples total.
+
+    We'll assume that the triples are presented to you in sorted order of time, and for simplicity we'll 
+    assume that each pair of computers communicates at most once during the interval that you're observing.  
+
+    The security analysts you're working with would like to able to answer questions of the following form:
+    if the virus was inserted into computer $C_a$ at time $0$, what is the first time at which it could have
+    have infected computer $C_b$?  If it cannot be infected at all, then we say that this time is $\infty$.  
+
+    The mechanics of infection are simple: if an infected computer $C_i$ communicates with an uninfected
+    computer $C_j$ at time $T_k$ (i.e., if one of the triples $(C_i, C_j, t_k)$ or $(C_j, C_i, t_k)$ appears
+    in the trace data), then computer $C_j$ becomes infected as well, starting at time $t_k$.  Infection can
+    thus spread from one machine to another across a \emph{sequence} of communications, provided that no step
+    in this sequence involves a move backward in time.  Thus, for example, if $C_i$ is infected by time $t_k$,
+    and the trace data contains triples $(C_i, C_j, t_k)$ and $(C_j, C_q, t_r)$ where $t_k \leq t_r$, then
+    $C_q$ will become infected via $C_j$.  Note that it is OK for $t_k$ to be equal to $t_r$; this would mean
+    that $C_j$ had open connections to both $C_i$ and $C_q$ at the same time, and so a virus could move from
+    $C_i$ to $C_q$ through $C_j$.  
+
+    For example, suppose that $n = 4$ and the trace data consists of the triples
+    \begin{equation*}
+        (C_1, C_2, 4), (C_2, C_4, 8), (C_3, C_4, 8), (C_1, C_4, 12)
+    \end{equation*}
+    and the virus was inserted into computer $C_1$ at time $0$.  Then $C_3$ would first be infected at time 
+    $8$ by a series of three steps: first $C_2$ becomes infected at time $4$, then $C_4$ from $C_2$ at time 
+    $8$, and then $C_3$ from $C_4$ at time $8$.  So we should return $8$ if the query is $C_3$.  
+
+    On the other hand, if the trace data were 
+    \begin{equation*}
+        (C_2, C_3, 8), (C_1, C_4, 12), (C_1, C_2, 14)
+    \end{equation*}
+    and again the virus was inserted into $C_1$ at time $0$, then $C_3$ would \emph{not} become infected 
+    during the period of observation.  So we should return $\infty$ if the query is $C_3$.  
+
+    So your goal is to design an algorithm (as fast as possible) that answers questions of this type.  
+    The input is a collection of trace data (consisting of $m$ triples),  a virus injection point (a 
+    computer $C_a$), and another computer $C_b$.  Your algorithm must return the first time at which 
+    $C_b$ could be infected, assuming the virus was injected into $C_a$ at time $0$.  
+
+    As always, prove correctness and running time.  
+
+\section{Consistent Lifetimes (50 points)}
+
+Suppose that you are an historian, and you are trying to figure out possible dates for when various historical figures may have lived.  In particular, there are $n$ people $P_1, P_2, \dots, P_n$ who you are studying.  Based on your research, you have discovered a collection of $m$ facts about when these people lived relative to each other.  Each of these facts has one of the following two forms:
+\begin{itemize}
+\item For some $i$ and $j$, person $P_i$ died before person $P_j$ was born; or
+\item For some $i$ and $j$, the lifetimes of $P_i$ and $P_j$ overlapped. 
+\end{itemize}
+
+Unfortunately, since the historical record is never fully trustworthy, it's possible that some of these facts are incorrect.  Design an $O(n+m)$ time algorithm to at least check whether they are \emph{internally consistent}, i.e., whether there is a birth and a death date for each person so that all of the facts are true.  As always, prove running time and correctness (i.e., prove that if there is a possible set of dates then your algorithm will return yes, and if no such dates are possible then your algorithm will return no).
+
+
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
