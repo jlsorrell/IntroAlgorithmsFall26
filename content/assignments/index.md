@@ -22,6 +22,7 @@ Please use [Gradescope](https://www.gradescope.com) to submit your homeworks and
 
 Practice Exams:
 - [Practice midterm 1](PracticeExams/midterm1.pdf).  [Solutions](PracticeExams/midterm1_solutions.pdf).
+- [Practice midterm 2](PracticeExams/midterm2.pdf).  [Solutions](PracticeExams/midterm2_solutions.pdf).
 
 Exam solutions:
 - [Midterm 1](https://jhu.instructure.com/courses/132259/files?preview=19452130)
