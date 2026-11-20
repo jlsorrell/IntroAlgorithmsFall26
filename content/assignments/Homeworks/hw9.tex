@@ -1,0 +1,201 @@
+\documentclass[11pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{xspace}
+\usepackage{theorem}
+\usepackage{hyperref}
+\usepackage{fullpage}
+%\usepackage[]{algorithm2e}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{listings}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\usepackage{enumitem}                     
+
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usetikzlibrary{arrows,shapes,snakes,automata,backgrounds,petri,decorations.markings}
+
+\tikzstyle{code} = [black!90, draw=black!30, fill=black!5, very thick,
+    rectangle, dashed, inner xsep=10pt, inner ysep=7pt]
+
+\newenvironment{codebox}{
+    \hspace{.05\textwidth}
+        \begin{tikzpicture}
+            \node[code] \bgroup
+                \begin{minipage}{.65\textwidth}
+                    \begin{alltt}}
+                    {\end{alltt}
+                \end{minipage}
+            \egroup;
+        \end{tikzpicture}
+}
+
+\newif\ifrubric
+\rubrictrue
+ 
+ 
+ 
+ \usepackage{titlesec}
+
+\titleformat*{\section}{\bfseries}
+\titleformat*{\subsection}{\bfseries}
+\titleformat*{\subsubsection}{\bfseries}
+\titleformat*{\paragraph}{\bfseries}
+\titleformat*{\subparagraph}{\bfseries}
+
+
+\newenvironment{proof}{{\bf Proof:  }}{\hfill\rule{2mm}{2mm}}
+\newenvironment{proofof}[1]{{\bf Proof of #1:  }}{\hfill\rule{2mm}{2mm}}
+\newenvironment{proofofnobox}[1]{{\bf#1:  }}{}
+\newenvironment{example}{{\bf Example:  }}{\hfill\rule{2mm}{2mm}}
+
+\newtheorem{fact}{Fact}
+\newtheorem{lemma}[fact]{Lemma}
+\newtheorem{theorem}[fact]{Theorem}
+\newtheorem{definition}[fact]{Definition}
+\newtheorem{corollary}[fact]{Corollary}
+\newtheorem{proposition}[fact]{Proposition}
+\newtheorem{claim}[fact]{Claim}
+\newtheorem{exercise}[fact]{Exercise}
+
+% math notation
+\newcommand{\R}{\ensuremath{\mathbb R}}
+\newcommand{\Z}{\ensuremath{\mathbb Z}}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\F}{\ensuremath{\mathcal F}}
+\newcommand{\SymGrp}{\ensuremath{\mathfrak S}}
+
+\newcommand{\size}[1]{\ensuremath{\left|#1\right|}}
+%\newcommand{\ceil}[1]{\ensuremath{\left\lceil#1\right\rceil}}
+%\newcommand{\floor}[1]{\ensuremath{\left\lfloor#1\right\rfloor}}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\polylog}{\operatorname{polylog}}
+
+% anupam's abbreviations
+\newcommand{\e}{\epsilon}
+\newcommand{\half}{\ensuremath{\frac{1}{2}}}
+\newcommand{\junk}[1]{}
+\newcommand{\sse}{\subseteq}
+\newcommand{\union}{\cup}
+\newcommand{\meet}{\wedge}
+
+\newcommand{\prob}[1]{\ensuremath{\text{{\bf Pr}$\left[#1\right]$}}}
+\newcommand{\expct}[1]{\ensuremath{\text{{\bf E}$\left[#1\right]$}}}
+\newcommand{\Event}{{\mathcal E}}
+\newcommand{\E}{\ensuremath{\text{E}}}
+
+\newcommand{\mnote}[1]{\normalmarginpar \marginpar{\tiny #1}}
+\newcommand{\opt}[0]{{\text{OPT}}}
+
+\setenumerate[0]{label=(\alph*)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document begins here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+
+\noindent {\large {\bf 601.433/633 Introduction to Algorithms} \hfill {{\bf Fall 2026}}}\\ 
+{{\bf Homework \#9}} \hfill {{\bf Due:} December 3, 2026, 11:59pm} \\
+\rule[0.1in]{\textwidth}{0.4pt}
+
+Remember: you may work in groups, but must write up your solution entirely on your own.  Solutions must by typeset (\LaTeX\ preferred but not required).  Collaboration is limited to discussing the problems -- you may not look at, compare, reuse, etc.~any text from anyone else in the class.  You may use the internet to look up formulas, definitions, etc., but may not simply look up the answers online.  
+
+Please include proofs with all of your answers, unless stated otherwise.
+
+
+\noindent \rule[0.1in]{\textwidth}{0.4pt}
+
+\section{Circulations (33 points)}
+
+Let's look at some variations of max-flow.  In class, we talked about algorithms to compute the maximum flow from a source $s$ to a sink $t$ in a directed graph $G= (V, E)$ when we are given edge capacities $c : E \rightarrow \mathbb{R^+}$.  A valid flow was a function $f : E \rightarrow \mathbb{R}_{\geq 0}$ so that $f(e) \leq c(e)$ for all $e \in E$, and for all nodes $v \in V \setminus\{s,t\}$ we required the flow in to equal the flow out, i.e.~$\sum_{u} f(u,v) = \sum_{u} f(v,u)$.  
+
+\begin{enumerate}
+\item (16 points) What if we no longer have a single $s$ and a single $t$?  Instead, think of every node $v$ as having a demand $d_v$.  If $d_v$ is positive then $v$ wants flow; it is a sink.  If $d_v$ is negative then $v$ wants to get rid of flow; it is a source.  And if $d_v = 0$ then $v$ wants to simply transit flow; it is neither a source nor a sink.  A valid \emph{circulation} is an assignment $f : E \rightarrow \mathbb{R}_{\geq 0}$ such that $f(e) \leq c(e)$ for all $e \in E$ (i.e., capacities are not violated), and $\sum_{u} f(u,v) - \sum_{u} f(v,u) = d_v$ for all $v \in V$ (i.e., at every node the flow-in minus the flow-out is equal to the demand).  
+
+Given a directed graph with capacities and demands, give a polynomial-time algorithm to determine whether a valid circulation exists.  Prove correctness and polynomial running time.  Hint: reduce to max-flow.
+
+\item (17 points) Let's make things even more complicated.  Capacities are an upper bound on flow -- we are not allowed to send more flow through an edge than its capacity allows.  What if we also want to have lower bounds?  That is, in addition to capacities $c$, we are also given lower bounds $\ell : E \rightarrow \mathbb{R}_{\geq 0}$ and we require $\ell(e) \leq f(e) \leq c(e)$ for all $e \in E$?
+
+Let's redefine a valid circulation with these lower bounds.  We are now given a directed graph $G = (V,E)$, capacities $c : E \rightarrow \mathbb{R}^+$, lower bounds $\ell : E \rightarrow \mathbb{E}_{\geq 0}$, and for each vertex $v$ we are given a demand $d_v$.  A valid circulation is now a function $f : E \rightarrow \mathbb{R}_{\geq 0}$ such that $\ell(e) \leq f(e) \leq c(e)$ for all $e \in E$, and $\sum_{u} f(u,v) - \sum_{u} f(v,u) = d_v$.  
+
+Give a polynomial-time algorithm to determine whether a valid circulation exists.  Prove correctness and polynomial running time. 
+
+Hint: Try to transform the problem into finding a circulation without lower bounds, i.e., the setting of part (a).  You might want to start by initially setting $f(e)= \ell(e)$ for all $e$.  This will not be a valid circulation, but what does the ``remaining" problem look like?
+\end{enumerate}
+
+
+
+\section{Realizable Degree Sequences (33 points)}
+
+Recall that the \emph{in-degree} of a vertex $v$ in a directed graph is the number of edges that go into $v$, i.e.~the number of edges of the form $(u,v)$.  Similarly, the \emph{out-degree} is the number of edges leaving $v$, i.e.~the number of edges of the form $(v,u)$.  Let $d_{v,in}$ denote the in-degree of $v$, and let $d_{v,out}$ denote the out-degree.  In this problem we will not allow any loops (edges of the form $(u,u)$) or multiedges (i.e.~any edge $(u,v)$ can only be in the graph at most once, although both $(u,v)$ and $(v,u)$ could be in the graph).
+
+\begin{enumerate}
+\item  (16 points)
+Suppose you are given the following set of degree constraints for a four-node directed graph:
+\begin{align*}
+&d_{1,in} = 0, d_{1,out} = 2 \\
+&d_{2,in} = 1, d_{2,out} = 2 \\
+&d_{3,in} = 1, d_{3,out} = 1 \\
+&d_{4,in} = 3, d_{4,out} = 0
+\end{align*}
+
+Is there a directed graph, with no multi-edges or self-loops, that satisfies these constraints?  If so, what is it?  If not, why not?
+
+
+
+\item (17 points) This type of specification, where we are given the in- and out-degrees of every vertex, is called a \emph{degree sequence}.  The question above was whether a particular degree sequence is \emph{realizable} -- that is, whether there exists a graph having those degrees.  
+
+Give a polynomial-time algorithm that, given a degree sequence, will determine if it is realizable, and if it is will produce a directed graph with those degrees.  The graph should not have any self loops or multi-edges (i.e., for each directed pair $(i,j)$ with $i \neq j$ there can be at most one edge from $i$ to $j$, although it is fine if there is also an edge from $j$ to $i$).  Prove that your algorithm is correct, and runs in polynomial time. 
+
+Hint: think flow, and think about creating a useful auxiliary graph.
+
+
+\end{enumerate}
+
+
+
+\section{Linear Programming (34 points)}
+
+Let's consider linear programming formulations of the maximum-weight matching problem.  We now have an (undirected) graph $G = (V, E)$ and weights $w : E \rightarrow \mathbb{R}^+$ (note that we \emph{are not} assuming that $G$ is bipartite).  Our goal is to find the matching $M$ which maximizes $\sum_{e \in M} w(e)$, under the constraint that for all $e, e' \in M$, $e \cap e' = \emptyset$ (that is, no two edges in $M$ share an endpoint).  
+
+Consider the following linear program which has a variable $x_e$ for every edge $e$.  
+
+\begin{align*}
+\max &\sum_{e \in E} w(e) x_e \\
+\text{subject to} & \sum_{v : \{u,v\} \in E} x_{\{u,v\}} \leq 1  & \forall u \in V \\
+& x_e \geq 0 & \forall e \in E
+\end{align*}
+
+
+\begin{enumerate}
+\item (17 points) Prove that the optimal value of this LP is \emph{at least} the weight of the maximum-weight matching.
+
+
+
+
+\item (17 points) Unlike the examples in class, this is not an exact formulation of the maximum-weight matching problem.  Find a graph $G = (V,E)$ and weights $w : E \rightarrow \mathbb{R}^+$ such that the optimal LP value is strictly larger than the weight of the maximum-weight matching (and prove this).  
+
+
+
+
+\end{enumerate}
+
+
+
+\end{document}
+
