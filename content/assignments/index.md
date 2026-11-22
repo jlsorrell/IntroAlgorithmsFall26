@@ -26,3 +26,4 @@ Practice Exams:
 
 Exam solutions:
 - [Midterm 1](https://jhu.instructure.com/courses/132259/files?preview=19452130)
+- [Midterm 2](https://jhu.instructure.com/courses/132259/files?preview=19960127)
