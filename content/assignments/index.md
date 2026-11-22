@@ -16,8 +16,12 @@ Please use [Gradescope](https://www.gradescope.com) to submit your homeworks and
 - Homework 4: [PDF](Homeworks/hw4.pdf), [LaTeX](Homeworks/hw4.tex).  [Solutions](https://jhu.instructure.com/courses/132259/files?preview=19617614).
 - Homework 5: [PDF](Homeworks/hw5.pdf), [LaTeX](Homeworks/hw5.tex).  [Solutions](https://jhu.instructure.com/courses/132259/files?preview=19724020).
 - Homework 6: [PDF](Homeworks/hw6.pdf), [LaTeX](Homeworks/hw6.tex).
+[Solutions](https://jhu.instructure.com/courses/132259/files?preview=19945639).
 - Homework 7: [PDF](Homeworks/hw7.pdf), [LaTeX](Homeworks/hw7.tex).
+[Solutions](https://jhu.instructure.com/courses/132259/files?preview=19945643).
 - Homework 8: [PDF](Homeworks/hw8.pdf), [LaTeX](Homeworks/hw8.tex).
+[Solutions](https://jhu.instructure.com/courses/132259/files?preview=19945646).
+- Homework 9: [PDF](Homeworks/hw9.pdf), [LaTeX](Homeworks/hw9.tex).
 
 
 Practice Exams:
